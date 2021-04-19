@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md">
+      <h3>ジャンル一覧/追加</h3>
+      <%= form_with model: @genre, url: admin_genre_path, method: :patch do |f| %>
+      <table>
+        <tr>
+          <th>ジャンル名</th>
+          <td>
+            <div class= "form-group pt-3 ml-5 form-inline">
+              <%= f.text_field :name, class: "form-control" %>
+              <%= f.submit :"変更を保存", class: "btn btn-success ml-5" %>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <% end %>
+    </div>
+  </div>
+</div>

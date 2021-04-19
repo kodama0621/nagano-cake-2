@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md">
+      <h3 class= "mb-4">商品一覧(全<%= @items.count %>件)</h3>
+      <div class= "d-flex justify-content-between">
+        <% @items.each do |item| %>
+          <div class= "items-section">
+            <div class= "item-img">
+              <%= link_to item_path(item) do %>
+                <%= attachment_image_tag item, :image, fallback: "no-image.png", size: "200x200" %>
+              <% end %>
+            </div>
+            <p class= "mb-0 mt-3 text-center"><%= item.name %></p>
+            <div class= "items-content">
+              <div class= "ml-5">
+                <p>¥<%= item.price %></p>
+              </div>
+              <div class= "items-favorite">
+                <% if item.favorites.where(customer_id: current_customer.id).exists? %>
+                  <p>
+                    <%= link_to item_favorites_path(item, :favorite_id => "1"), method: :delete do %>
+                      <i class="fas fa-heart unlike-btn"></i>
+                    <% end %>
+                    <%= item.favorites.count %>
+                  </p>
+                <% else %>
+                  <p>
+                    <%= link_to item_favorites_path(item), method: :post do %>
+                      <i class="far fa-heart like-btn"></i>
+                    <% end %>
+                    <%= item.favorites.count %>
+                  </p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

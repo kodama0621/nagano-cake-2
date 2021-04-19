@@ -1,0 +1,50 @@
+ent_end_user), class: "btn btn-success btn-sm ml-3" %></td>
+        </tr>
+      </table>
+      <table class= "table table-bordered">
+        <tr>
+          <th class= "table-active" style="width: 30%">氏名</th>
+          <td><%= @customer.first_name %><%= @customer.last_name %></td>
+        </tr>
+        <tr>
+          <th class= "table-active">カナ</th>
+          <td><%= @customer.kana_first_name %><%= @customer.kana_last_name %></td>
+        </tr>
+         <tr>
+          <th class= "table-active">郵便番号</th>
+          <td><%= @customer.postal_code %></td>
+        </tr>
+         <tr>
+          <th class= "table-active">住所</th>
+          <td><%= @customer.address %></td>
+        </tr>
+        <tr>
+          <th class= "table-active">電話番号</th>
+          <td><%= @customer.phone_number %></td>
+        </tr>
+        <tr>
+          <th class= "table-active">メールアドレス</th>
+          <td><%= @customer.email %></td>
+        </tr>
+        <tr>
+          <th class= "table-active">ポイント</th>
+          <td><%= @customer.point %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md">
+      <table class= "mb-3">
+        <tr>
+          <th>配送先</th>
+          <td><%= link_to "一覧を見る", addresses_path, class: "btn btn-primary btn-sm w-100 ml-3" %></td>
+        </tr>
+        <tr>
+          <th>注文履歴</th>
+          <td><%= link_to "一覧を見る", orders_path, class: "btn btn-primary btn-sm w-100 ml-3" %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

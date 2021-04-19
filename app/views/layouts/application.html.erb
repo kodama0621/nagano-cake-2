@@ -3,13 +3,66 @@
   <head>
     <title>NaganoCake</title>
     <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <% if admin_signed_in? %>
+          <%= link_to "NaganoCake", admin_items_path, class: "navbar-brand" %>
+        <% else %>
+          <%= link_to "NaganoCake", root_path, class: "navbar-brand" %>
+          <p class= "navbar-brand mb-0">ポイント<%= current_customer.point %></p>
+        <% end %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+             <% if customer_signed_in? %>
+              <div class= "d-flex align-items-center mr-3">
+                <p class= "text-light mb-0"><%= "ようこそ#{current_customer.first_name}さん!" %></p>
+              </div>
+              <%= link_to "マイページ", customer_path(current_end_user), class: "nav-link active" %>
+              <%= link_to "商品一覧", items_path, class: "nav-link active" %>
+              <%= link_to "カート", cart_items_path, class: "nav-link active" %>
+              <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "nav-link active" %>
+            <% elsif admin_signed_in? %>
+              <%= link_to "商品一覧", admin_items_path, class: "nav-link active" %>
+              <%= link_to "会員一覧", admin_customers_path, class: "nav-link active" %>
+              <%= link_to "注文履歴一覧", admin_orders_path, class: "nav-link active" %>
+              <%= link_to "ジャンル一覧", admin_genres_path, class: "nav-link active" %>
+              <%= link_to "ログアウト", destroy_admin_session_path, method: :delete,  class: "nav-link active" %>
+            <% else %>
+              <%= link_to "商品一覧", items_path, class: "nav-link active"%>
+              <%= link_to "新規登録", new_customer_registration_path, class: "nav-link active" %>
+              <%= link_to "ログイン", new_customer_session_path, class: "nav-link active" %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <% flash.each do |key, value| %>
+      <p class = "alert alert-primary pt-2 pb-2 mb-0 w-auto"><%= value %><p>
+    <% end %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 offset-md-8 d-flex justify-content-end">
+          <form class="form-inline my-2 my-lg-0 pr-2">
+            <%= form_tag admin_items_path, :method => 'get' do %> <%# projects_pathはモデル名で読みかえること %>
+            <p class= "search mb-0">
+              <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "商品検索" %>
+              <%= submit_tag "Search", class: "btn btn-outline-success my-2", :name => nil %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
     <%= yield %>
   </body>
 </html>

@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 text-right mb-4">
+      <h3>商品詳細</h3>
+    </div>
+  </div>
+  <div class="row mt3">
+    <div class="col-md-4 text-right">
+      <%= attachment_image_tag @item, :image, fallback: "no-image.png", size: "200x200" %>
+    </div>
+    <div class="col-md-8">
+      <table class= "table">
+        <tr>
+          <th>商品名</th>
+          <td><%= @item.name %></td>
+        </tr>
+        <tr>
+          <th>商品説明</th>
+          <td><%= @item.introduction %></td>
+        </tr>
+        <tr>
+          <th>ジャンル</th>
+          <td><%= @item.genre.name %></td>
+        </tr>
+        <tr>
+          <th>税込価格</th>
+          <td><%= @item.price %>円</td>
+        </tr>
+        <tr>
+          <th>ジャンル</th>
+          <% if @item.is_active == false %>
+            <td>販売停止中</td>
+          <% else %>
+             <td class= "text-success">販売中</td>
+          <% end %>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 offset-md-4 text-center">
+     <%= form_with model: @cart_item, url: cart_items_path, method: :post do |f| %>
+       <%= f.hidden_field :item_id, value: @item.id %>
+       <div class= "form-inline">
+         <%= f.select :amount, [1,2,3,4,5,6,7,8,9,10], { include_blank: '個数選択'}, {class: "form-control w-25 mr-5"}%>
+         <%= f.submit :"カートに入れる", class: "btn btn-success" %>
+       </div>
+     <% end %>
+    </div>
+  </div>
+</div>

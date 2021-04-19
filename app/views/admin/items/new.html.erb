@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <h2 class= "mb-5">商品新規登録</h2>
+      <%= form_for @item, url: admin_items_path, method: :post do |f| %>
+      <table>
+        <tr>
+          <th><%= f.label :"商品画像", class: "mr-5" %></th>
+          <td>
+            <div class="form-group">
+             <%= f.attachment_field :image %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th><%= f.label :"商品名", class: "mr-5" %></th>
+          <td>
+            <div class="form-group">
+              <%= f.text_field :name, class: "form-control" %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th><%= f.label :"商品説明", class: "mr-5" %></th>
+          <td>
+            <div class="form-group">
+               <%= f.text_area :explanation, class: "form-control" %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th><%= f.label :"ジャンル", class: "mr-5" %></th>
+          <td>
+            <div class="form-group">
+               <%= f.collection_select(:genre_id, @genres, :id, :name, {prompt: "-- 選択してください --"}, {class: "form-control"}) %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th><%= f.label :"税抜価格", class: "mr-5" %></th>
+          <td>
+            <div class="form-group form-inline">
+               <%= f.text_field :price, class: "form-control" %>円
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th><%= f.label :"販売ステータス", class: "mr-5" %></th>
+          <td>
+            <div class="form-group">
+              <%= f.radio_button :is_active, false, checked: true %>
+              <%= f.label :is_active_false, "販売中" %>
+              <%= f.radio_button :is_active, true, checked: false %>
+              <%= f.label :is_active_true, "販売停止中" %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <%= f.submit "新規登録", class: "btn btn-success w-50" %>
+          </td>
+        </tr>
+      </table>
+      <% end %>
+    </div>
+  </div>
+</div>
