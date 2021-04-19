@@ -9,26 +9,44 @@ Rails.application.routes.draw do
     passwords:     'admin_devises/passwords',
     registrations: 'admin_devises/registrations'
   }
-  namespace :admin do
-    resources :items, only: [:index, :new, :create, :show, :edit, :update]
-    resources :genres, only: [:index, :create, :edit, :update]
-    resources :customers, only: [:index, :show, :edit, :update]
-    resources :orders, only: [:show, :update]
-  end
 
-  devise_for :customers, controllers: {
+   devise_for :customers, controllers: {
     sessions:      'customers/sessions',
     passwords:     'customers/passwords',
     registrations: 'customers/registrations'
   }
 
-  namespace :public do
-    resources :items, only: [:index, :show]
-    resources :customers, only: [:show, :edit, :update]
-    resources :cart_items, only: [:index, :update, :create, :destroy]do
-      delete "all_destroy"
+  namespace :admin do
+    resources :items, only: [:index, :new, :create, :show, :edit, :update]
+    resources :customers, only: [:index, :show, :edit, :update] do
+      member do
+        get 'customer_orders'
+      end
     end
-    resources :orders, only: [:index, :show, :new, :create]
+    resources :genres, only: [:index, :create, :edit, :update]
+    resources :orders, only: [:index, :show, :update]
+    resources :order_details, only: [:update]
+  end
+
+  scope module: :customer do
+    resources :customers, only: [:show, :edit, :update] do
+      collection do
+        get 'quit'
+        patch 'withdraw'
+      end
+    end
+    resources :items, only: [:index, :show]
+    resources :orders, only: [:index, :show, :new, :create] do
+      collection do
+        post 'confirm'
+        get 'complete'
+      end
+    end
+    resources :cart_items, only: [:index, :update, :create, :destroy] do
+      collection do
+        delete 'destroy_all'
+      end
+    end
     resources :addresses, only: [:index, :edit, :create, :update, :destroy]
   end
 end
