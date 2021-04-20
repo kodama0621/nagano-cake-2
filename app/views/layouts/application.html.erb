@@ -16,7 +16,6 @@
           <%= link_to "NaganoCake", admin_items_path, class: "navbar-brand" %>
         <% else %>
           <%= link_to "NaganoCake", root_path, class: "navbar-brand" %>
-          <p class= "navbar-brand mb-0">ポイント<%= current_customer.point %></p>
         <% end %>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -38,6 +37,7 @@
               <%= link_to "ジャンル一覧", admin_genres_path, class: "nav-link active" %>
               <%= link_to "ログアウト", destroy_admin_session_path, method: :delete,  class: "nav-link active" %>
             <% else %>
+              <%= link_to "About", home_about_path, class: "nav-link active"%>
               <%= link_to "商品一覧", items_path, class: "nav-link active"%>
               <%= link_to "新規登録", new_customer_registration_path, class: "nav-link active" %>
               <%= link_to "ログイン", new_customer_session_path, class: "nav-link active" %>
